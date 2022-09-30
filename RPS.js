@@ -53,18 +53,51 @@ function incrementScore(winCode) {
     }
 }
 
+function checkVictor() {
+    if (playerScore === 5 && computerScore === 5) {
+        return 3;
+    }
+    else if (computerScore === 5) {
+        return 2;
+    }
+    else if (playerScore === 5) {
+        return 1;
+    }
+    return 0;
+}
+
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        //playRound returns an array [message, winCode]
+        // playRound returns an array [message, winCode]
         const result = playRound(button.textContent, getComputerChoice());
         const message = result[0];
         const winCode = result[1];
+
+        // adjust score and add to resultsBoard
         incrementScore(winCode);
         const resultBoard = document.querySelector('.results');
         const newResult = document.createElement('p');
-        newResult.textContent = message;
+        newResult.innerHTML = `${message}<br>Score: You ${playerScore} - ${computerScore} Computer`;
         resultBoard.appendChild(newResult);
+
+        // check for a winner
+        winner = checkVictor();
+        if (winner !== 0) {
+            const victor = document.createElement('p');
+            switch(winner) {
+                case 1:
+                    victor.textContent = "You Win!";
+                    break;
+                case 2:
+                    victor.textContent = "The Computer Wins!";
+                    break;
+                case 3:
+                    victor.textContent = "It's a Tie!";
+                    break;
+            }
+            resultBoard.appendChild(victor);
+        }
     });
 });
 
