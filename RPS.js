@@ -73,49 +73,52 @@ function game() {
     const buttons = document.querySelectorAll('button');
     buttons.forEach((button) => {
         button.addEventListener('click', () => {
-            // playRound returns an array [message, winCode]
-            const result = playRound(button.textContent, getComputerChoice());
-            const message = result[0];
-            const winCode = result[1];
-
-            // adjust score and add to resultsBoard
-            incrementScore(winCode);
             const resultBoard = document.querySelector('#results');
-            const newResult = document.createElement('p');
-            newResult.setAttribute('id', 'result');
-            newResult.innerHTML = `${message}<br>Score: You ${playerScore} - ${computerScore} Computer`;
             
-            // get and remove previous result before adding new result
-            prevResult = resultBoard.querySelector('#result');
-            if (prevResult !== null) {
-                resultBoard.removeChild(prevResult);
-            }
-            resultBoard.appendChild(newResult);
+            // if the game is over, disable button event listeners
+            if (!gameOver) {
+                // playRound returns an array [message, winCode]
+                const result = playRound(button.textContent, getComputerChoice());
+                const message = result[0];
+                const winCode = result[1];
 
-    // check for a winner
-    winner = checkVictor();
-    if (winner !== 0) {
-        gameOver = true;
-        const victor = document.createElement('p');
-        switch(winner) {
-            case 1:
-                victor.textContent = "You Win!";
-                break;
-            case 2:
-                victor.textContent = "The Computer Wins!";
-                break;
-            case 3:
-                victor.textContent = "It's a Tie!";
-                break;
-        }
-        resultBoard.appendChild(victor);
-        playAgain = document.createElement("button");
-        playAgain.textContent = "Play Again?";
-        playAgain.addEventListener('click', () => {
-            resetGame();
-        });
-        resultBoard.append(playAgain);
-    }
+                // adjust score and add to resultsBoard
+                incrementScore(winCode);
+                const newResult = document.createElement('p');
+                newResult.setAttribute('id', 'result');
+                newResult.innerHTML = `${message}<br>Score: You ${playerScore} - ${computerScore} Computer`;
+                
+                // get and remove previous result before adding new result
+                prevResult = resultBoard.querySelector('#result');
+                if (prevResult !== null) {
+                    resultBoard.removeChild(prevResult);
+                }
+                resultBoard.appendChild(newResult);
+                // check for a winner
+                winner = checkVictor();
+                if (winner !== 0) {
+                    gameOver = true;
+                    const victor = document.createElement('p');
+                    switch(winner) {
+                        case 1:
+                            victor.textContent = "You Win!";
+                            break;
+                        case 2:
+                            victor.textContent = "The Computer Wins!";
+                            break;
+                        case 3:
+                            victor.textContent = "It's a Tie!";
+                            break;
+                    }
+                    resultBoard.appendChild(victor);
+                    playAgain = document.createElement("button");
+                    playAgain.textContent = "Play Again?";
+                    playAgain.addEventListener('click', () => {
+                        resetGame();
+                    });
+                    resultBoard.append(playAgain);
+                }
+            }   
         });
     });
 }
