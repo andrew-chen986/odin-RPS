@@ -78,7 +78,7 @@ function game() {
             // if the game is over, disable button event listeners
             if (!gameOver) {
                 // playRound returns an array [message, winCode]
-                const result = playRound(button.textContent, getComputerChoice());
+                const result = playRound(button.getAttribute('id'), getComputerChoice());
                 const message = result[0];
                 const winCode = result[1];
 

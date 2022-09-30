@@ -8,14 +8,21 @@ body {
 .container {
     display: flex;
     justify-content: space-around;
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 h1 {
+    font-size: 50px;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+img {
+    max-width: 33%;
 }
 
 #result {
@@ -29,6 +36,16 @@ h1 {
 }
 
 button {
-    border: 2px solid black;
+    font-family: Montserrat;
+    font-size: 34px;
+    font-weight: 700;
+    color: white;
+    background-color: black;
     border-radius: 5px;
+    width: 33%;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #292926;
 }
