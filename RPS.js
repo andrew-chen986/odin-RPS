@@ -19,23 +19,23 @@ function playRound(playerSelection, computerSelection) {
         case "rock":
             switch (computerSelection) {
                 case "scissors":
-                    return ["You Win! Rock beats Scissors", 2];
+                    return ["You Win! Rock beats Scissors!", 2];
                 case "paper":
-                    return ["You Lose! Paper beats Rock", 0];
+                    return ["You Lose! Paper beats Rock!", 0];
             }
         case "paper":
             switch (computerSelection) {
                 case "rock":
-                    return ["You Win! Paper beats Rock", 2];
+                    return ["You Win! Paper beats Rock!", 2];
                 case "scissors":
-                    return ["You Lose! Scissors beats Paper", 0];
+                    return ["You Lose! Scissors beats Paper!", 0];
             }
         case "scissors":
             switch (computerSelection) {
                 case "paper":
-                    return ["You Win! Scissors beats Paper", 2];
+                    return ["You Win! Scissors beats Paper!", 2];
                 case "rock":
-                    return ["You Lose! Rock beats Scissors", 0];
+                    return ["You Lose! Rock beats Scissors!", 0];
             }
     }
 }
@@ -99,7 +99,7 @@ function game() {
                 incrementScore(winCode);
                 const newResult = document.createElement('p');
                 newResult.setAttribute('id', 'result');
-                newResult.innerHTML = `${message}<br>Score: You ${playerScore} - ${computerScore} Computer`;
+                newResult.textContent = `${message}`;
                 
                 // create image of results
                 const playerChoiceImage = document.createElement('div');
@@ -127,28 +127,45 @@ function game() {
                         break;
 
                 }
-                const imageContainer = document.createElement('div');
+                const imageContainer = document.createElement('div')
+                const playerImageContainer = document.createElement('div');
+                const computerImageContainer = document.createElement('div');
+
                 imageContainer.setAttribute('id', 'round-images');
+                playerImageContainer.setAttribute('id', 'player-image');
+                computerImageContainer.setAttribute('id', 'computer-image');
                 playerChoiceImage.setAttribute('class', 'round');
                 computerChoiceImage.setAttribute('class', 'round');
 
+                imageContainer.appendChild(playerImageContainer);
+                imageContainer.appendChild(computerImageContainer);
+
+
                 // get and remove previous round result before adding new result
-                const prevImageContainer = resultBoard.querySelector('#round-images');
+                const prevImageContainer = resultBoard.querySelector('#round-images')
                 const prevResult = resultBoard.querySelector('#result');
                 if (prevImageContainer !== null) {
-                    prevPlayerImage = prevImageContainer.querySelectorAll('.round')[0];
-                    prevComputerImage = prevImageContainer.querySelectorAll('.round')[1];
-                    prevImageContainer.removeChild(prevPlayerImage);
-                    prevImageContainer.removeChild(prevComputerImage);
                     resultBoard.removeChild(prevImageContainer);
                 }
                 if (prevResult !== null) {
                     resultBoard.removeChild(prevResult);
                 }
+                
+                // append choice images to container
+                playerImageContainer.appendChild(playerChoiceImage);
+                computerImageContainer.appendChild(computerChoiceImage);
+
+                // add score <p> to player/computer image containers
+                const playerScoreText = document.createElement('p');
+                const computerScoreText = document.createElement('p');
+                playerScoreText.textContent = `You: ${playerScore}`;
+                computerScoreText.textContent = `Computer: ${computerScore}`;
+                playerImageContainer.appendChild(playerScoreText);
+                computerImageContainer.appendChild(computerScoreText);
 
                 // add round images to div for styling
-                imageContainer.appendChild(playerChoiceImage);
-                imageContainer.appendChild(computerChoiceImage);
+                imageContainer.appendChild(playerImageContainer);
+                imageContainer.appendChild(computerImageContainer);
                 resultBoard.appendChild(imageContainer);
                 resultBoard.appendChild(newResult);
                 // check for a winner
