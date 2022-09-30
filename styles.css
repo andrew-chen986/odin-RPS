@@ -1,6 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,600&display=swap');
+body {
+    font-family: Montserrat;
+    background-color: black;
+}
+
+
 .container {
     display: flex;
     justify-content: space-around;
+}
+
+h1 {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#result {
+    color: white;
 }
 
 #results {

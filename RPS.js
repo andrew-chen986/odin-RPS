@@ -64,6 +64,9 @@ function checkVictor() {
 
 function resetGame() {
     document.getElementById('results').innerHTML = '';
+    playerScore = 0;
+    computerScore = 0;
+    gameOver = false;
 }
 
 function game() {
@@ -92,6 +95,7 @@ function game() {
     // check for a winner
     winner = checkVictor();
     if (winner !== 0) {
+        gameOver = true;
         const victor = document.createElement('p');
         switch(winner) {
             case 1:
@@ -104,12 +108,11 @@ function game() {
                 victor.textContent = "It's a Tie!";
                 break;
         }
-        resetGame();
         resultBoard.appendChild(victor);
         playAgain = document.createElement("button");
         playAgain.textContent = "Play Again?";
         playAgain.addEventListener('click', () => {
-            
+            resetGame();
         });
         resultBoard.append(playAgain);
     }
@@ -117,6 +120,7 @@ function game() {
     });
 }
 
+let gameOver = false;
 let playerScore = 0
 let computerScore = 0
 
