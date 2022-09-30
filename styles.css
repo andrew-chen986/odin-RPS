@@ -3,9 +3,10 @@
     justify-content: space-around;
 }
 
-.results {
+#results {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 button {
