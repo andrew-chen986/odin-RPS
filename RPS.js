@@ -1,9 +1,9 @@
 
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
-    if (choice === 0) return "Rock"
-    else if (choice === 1) return "Paper"
-    else return "Scissors"
+    if (choice === 0) return "rock"
+    else if (choice === 1) return "paper"
+    else return "scissors"
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -69,6 +69,17 @@ function resetGame() {
     gameOver = false;
 }
 
+function getImage(choice) {
+    switch(choice) {
+        case 'rock':
+            return 1;
+        case 'paper':
+            return 2;
+        case 'scissors':
+            return 3;
+    }
+}
+
 function game() {
     const buttons = document.querySelectorAll('button');
     buttons.forEach((button) => {
@@ -78,7 +89,9 @@ function game() {
             // if the game is over, disable button event listeners
             if (!gameOver) {
                 // playRound returns an array [message, winCode]
-                const result = playRound(button.getAttribute('id'), getComputerChoice());
+                const playerChoice = button.getAttribute('id');
+                const computerChoice = getComputerChoice();
+                const result = playRound(playerChoice, computerChoice);
                 const message = result[0];
                 const winCode = result[1];
 
@@ -88,11 +101,55 @@ function game() {
                 newResult.setAttribute('id', 'result');
                 newResult.innerHTML = `${message}<br>Score: You ${playerScore} - ${computerScore} Computer`;
                 
-                // get and remove previous result before adding new result
-                prevResult = resultBoard.querySelector('#result');
+                // create image of results
+                const playerChoiceImage = document.createElement('div');
+                const computerChoiceImage = document.createElement('div');
+                switch(playerChoice) {
+                    case 'rock':
+                        playerChoiceImage.innerHTML = '<img src="Rock.png">';
+                        break;
+                    case 'paper':
+                        playerChoiceImage.innerHTML = '<img src="Paper.png">';
+                        break;
+                    case 'scissors':
+                        playerChoiceImage.innerHTML = '<img src="Scissors.png">';
+                        break;
+                }
+                switch(computerChoice) {
+                    case 'rock':
+                        computerChoiceImage.innerHTML = '<img src="Rock.png">';
+                        break;
+                    case 'paper':
+                        computerChoiceImage.innerHTML = '<img src="Paper.png">';
+                        break;
+                    case 'scissors':
+                        computerChoiceImage.innerHTML = '<img src="Scissors.png">';
+                        break;
+
+                }
+                const imageContainer = document.createElement('div');
+                imageContainer.setAttribute('id', 'round-images');
+                playerChoiceImage.setAttribute('class', 'round');
+                computerChoiceImage.setAttribute('class', 'round');
+
+                // get and remove previous round result before adding new result
+                const prevImageContainer = resultBoard.querySelector('#round-images');
+                const prevResult = resultBoard.querySelector('#result');
+                if (prevImageContainer !== null) {
+                    prevPlayerImage = prevImageContainer.querySelectorAll('.round')[0];
+                    prevComputerImage = prevImageContainer.querySelectorAll('.round')[1];
+                    prevImageContainer.removeChild(prevPlayerImage);
+                    prevImageContainer.removeChild(prevComputerImage);
+                    resultBoard.removeChild(prevImageContainer);
+                }
                 if (prevResult !== null) {
                     resultBoard.removeChild(prevResult);
                 }
+
+                // add round images to div for styling
+                imageContainer.appendChild(playerChoiceImage);
+                imageContainer.appendChild(computerChoiceImage);
+                resultBoard.appendChild(imageContainer);
                 resultBoard.appendChild(newResult);
                 // check for a winner
                 winner = checkVictor();
