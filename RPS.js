@@ -8,8 +8,6 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     // Ignorecase
-    console.log(playerSelection)
-    console.log(computerSelection)
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
 
@@ -42,29 +40,33 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function validateInput(str) {
-    if (typeof str === 'string') {
-        str = str.toLowerCase();
-        if (str === 'rock' || str === 'paper' || str === 'scissors') {
-            return true
-        }
+function incrementScore(winCode) {
+    if (winCode == 0) {
+        computerScore += 1;
     }
-    return false;
-}
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    
-    
-    
+    else if (winCode == 2) {
+        playerScore += 1;
+    }
+    else {
+        computerScore += 1;
+        playerScore += 1;
+    }
 }
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        console.log(playRound(button.textContent, getComputerChoice()));
+        //playRound returns an array [message, winCode]
+        const result = playRound(button.textContent, getComputerChoice());
+        const message = result[0];
+        const winCode = result[1];
+        incrementScore(winCode);
+        const resultBoard = document.querySelector('.results');
+        const newResult = document.createElement('p');
+        newResult.textContent = message;
+        resultBoard.appendChild(newResult);
     });
 });
 
-game();
+let playerScore = 0
+let computerScore = 0
