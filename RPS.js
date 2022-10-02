@@ -1,9 +1,11 @@
 
 function getComputerChoice() {
-    let choice = Math.floor(Math.random() * 3);
-    if (choice === 0) return "rock"
-    else if (choice === 1) return "paper"
-    else return "scissors"
+    let choice = Math.floor(Math.random() * 5);
+    if (choice === 0) return "rock";
+    else if (choice === 1) return "paper";
+    else if (choice === 2) return "scissors";
+    else if (choice === 3) return "lizard";
+    else return "spock";
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -19,23 +21,57 @@ function playRound(playerSelection, computerSelection) {
         case "rock":
             switch (computerSelection) {
                 case "scissors":
-                    return ["You Win! Rock beats Scissors!", 2];
+                    return ["You Win! Rock crushes Scissors!", 2];
                 case "paper":
-                    return ["You Lose! Paper beats Rock!", 0];
+                    return ["You Lose! Paper covers Rock!", 0];
+                case "lizard":
+                    return ["You Win! Rock crushes Lizard!", 2];
+                case "spock":
+                    return ["You Lose! Spock vaporizes Rock!", 0];
             }
         case "paper":
             switch (computerSelection) {
                 case "rock":
-                    return ["You Win! Paper beats Rock!", 2];
+                    return ["You Win! Paper covers Rock!", 2];
                 case "scissors":
-                    return ["You Lose! Scissors beats Paper!", 0];
+                    return ["You Lose! Scissors cuts Paper!", 0];
+                case "lizard":
+                    return ["You Lose! Lizard eats Paper!", 0];
+                case "spock":
+                    return ["You Win! Paper disproves Spock!", 2];
             }
         case "scissors":
             switch (computerSelection) {
                 case "paper":
-                    return ["You Win! Scissors beats Paper!", 2];
+                    return ["You Win! Scissors cuts Paper!", 2];
                 case "rock":
-                    return ["You Lose! Rock beats Scissors!", 0];
+                    return ["You Lose! Rock crushes Scissors!", 0];
+                case "lizard":
+                    return ["You Win! Scissors decapitates Lizard!", 2];
+                case "spock":
+                    return ["You Lose! Spock smashes Scissors!", 0];
+            }
+        case "lizard":
+            switch (computerSelection) {
+                case "scissors":
+                    return ["You Lose! Scissors decapitates Lizard!", 0];
+                case "paper":
+                    return ["You Win! Lizard eats Paper!", 2];
+                case "rock":
+                    return ["You Lose! Rock crushes Lizard!", 0];
+                case "spock":
+                    return ["You Win! Lizard poisons Spock!", 2];
+            }
+        case "spock":
+            switch (computerSelection) {
+                case "scissors":
+                    return ["You Win! Spock smashes Scissors!", 2];
+                case "paper":
+                    return ["You Lose! Paper disproves Spock!", 0];
+                case "lizard":
+                    return ["You Lose! Lizard poisons Spock!", 0];
+                case "rock":
+                    return ["You Win! Spock vaporizes Rock!", 2];
             }
     }
 }
@@ -114,6 +150,12 @@ function game() {
                     case 'scissors':
                         playerChoiceImage.innerHTML = '<img src="Scissors.png">';
                         break;
+                    case 'lizard':
+                        playerChoiceImage.innerHTML = '<img src="Lizard2.png">';
+                        break;
+                    case 'spock':
+                        playerChoiceImage.innerHTML = '<img src="Spock.png">';
+                        break;
                 }
                 switch(computerChoice) {
                     case 'rock':
@@ -124,6 +166,12 @@ function game() {
                         break;
                     case 'scissors':
                         computerChoiceImage.innerHTML = '<img src="Scissors.png">';
+                        break;
+                    case 'lizard':
+                        computerChoiceImage.innerHTML = '<img src="Lizard2.png">';
+                        break;
+                    case 'spock':
+                        computerChoiceImage.innerHTML = '<img src="Spock.png">';
                         break;
 
                 }
